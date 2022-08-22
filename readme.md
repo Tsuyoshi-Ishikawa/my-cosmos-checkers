@@ -17,10 +17,13 @@ Your blockchain in development can be configured with `config.yml`. To learn mor
 
 Ignite CLI has scaffolded a Vue.js-based web app in the `vue` directory. Run the following commands to install dependencies and start the app:
 
-```
+```bash
 cd vue
 npm install
 npm run serve
+# npm run serve is not working at local.
+# we have to npm run dev at local.
+# https://github.com/ignite/cli/issues/2503#issuecomment-1132376680
 ```
 
 The frontend app is built using the `@starport/vue` and `@starport/vuex` packages. For details, see the [monorepo for Ignite front-end development](https://github.com/ignite/web).
