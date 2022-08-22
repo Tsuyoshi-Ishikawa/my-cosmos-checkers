@@ -281,9 +281,6 @@ func (m *QueryGetStoredGameResponse) GetStoredGame() StoredGame {
 	return StoredGame{}
 }
 
-// QueryAllStoredGameRequestでもbyte化したデータを扱うために`protobuf:がセットされている
-// keeper側でQueryAllStoredGameRequestが使用されているため、ちゃんとkeeperでやり取りされるデータもbyteコードされる必要あり
-// https://tutorials.cosmos.network/academy/3-my-own-chain/stored-game.html#protobuf-service-interfaces
 type QueryAllStoredGameRequest struct {
 	Pagination *query.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
 }
