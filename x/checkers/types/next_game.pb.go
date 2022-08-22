@@ -22,6 +22,8 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+// `protobuf:"を設定することで、byteコード化して扱われないといけないことになる。
+// https://tutorials.cosmos.network/academy/2-main-concepts/protobuf.html#code-example
 type NextGame struct {
 	IdValue uint64 `protobuf:"varint,1,opt,name=idValue,proto3" json:"idValue,omitempty"`
 }
