@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 	"strings"
+	"strconv"
 
 	"github.com/alice/checkers/x/checkers/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -61,6 +62,19 @@ func (k msgServer) PlayMove(goCtx context.Context, msg *types.MsgPlayMove) (*typ
 	storedGame.Game = game.String()
 	storedGame.Turn = rules.PieceStrings[game.Turn]
 	k.Keeper.SetStoredGame(ctx, storedGame)
+
+	// イベントを発火させる
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(sdk.EventTypeMessage,
+			sdk.NewAttribute(sdk.AttributeKeyModule, types.ModuleName),
+			sdk.NewAttribute(sdk.AttributeKeyAction, types.PlayMoveEventKey),
+			sdk.NewAttribute(types.PlayMoveEventCreator, msg.Creator),
+			sdk.NewAttribute(types.PlayMoveEventIdValue, msg.IdValue),
+			sdk.NewAttribute(types.PlayMoveEventCapturedX, strconv.FormatInt(int64(captured.X), 10)),
+			sdk.NewAttribute(types.PlayMoveEventCapturedY, strconv.FormatInt(int64(captured.Y), 10)),
+			sdk.NewAttribute(types.PlayMoveEventWinner, rules.PieceStrings[game.Winner()]),
+		),
+	)
 
 	// What to inform
 	return &types.MsgPlayMoveResponse{
