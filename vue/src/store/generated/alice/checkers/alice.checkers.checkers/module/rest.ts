@@ -17,7 +17,16 @@ export type CheckersMsgCreatePostResponse = object;
 
 export interface CheckersMsgPlayMoveResponse {
   idValue?: string;
+
+  /** @format int64 */
+  capturedX?: string;
+
+  /** @format int64 */
+  capturedY?: string;
+  winner?: string;
 }
+
+export type CheckersMsgRejectGameResponse = object;
 
 export interface CheckersNextGame {
   /** @format uint64 */

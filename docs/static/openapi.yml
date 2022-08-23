@@ -30638,6 +30638,16 @@ definitions:
     properties:
       idValue:
         type: string
+      capturedX:
+        type: string
+        format: int64
+      capturedY:
+        type: string
+        format: int64
+      winner:
+        type: string
+  alice.checkers.checkers.MsgRejectGameResponse:
+    type: object
   alice.checkers.checkers.NextGame:
     type: object
     properties:

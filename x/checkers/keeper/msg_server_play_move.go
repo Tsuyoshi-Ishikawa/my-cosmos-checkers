@@ -2,13 +2,13 @@ package keeper
 
 import (
 	"context"
-	"strings"
 	"strconv"
+	"strings"
 
-	"github.com/alice/checkers/x/checkers/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	rules "github.com/alice/checkers/x/checkers/rules"
+	"github.com/alice/checkers/x/checkers/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 func (k msgServer) PlayMove(goCtx context.Context, msg *types.MsgPlayMove) (*types.MsgPlayMoveResponse, error) {
