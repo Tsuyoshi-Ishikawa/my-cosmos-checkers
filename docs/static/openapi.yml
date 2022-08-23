@@ -30633,6 +30633,11 @@ definitions:
         type: string
   alice.checkers.checkers.MsgCreatePostResponse:
     type: object
+  alice.checkers.checkers.MsgPlayMoveResponse:
+    type: object
+    properties:
+      idValue:
+        type: string
   alice.checkers.checkers.NextGame:
     type: object
     properties:
