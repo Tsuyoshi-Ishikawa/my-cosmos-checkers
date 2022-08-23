@@ -4,6 +4,8 @@ package alice.checkers.checkers;
 option go_package = "github.com/alice/checkers/x/checkers/types";
 
 message NextGame {
-  uint64 idValue = 1; 
-  
+  string creator = 1;
+  uint64 idValue = 2;
+  string fifoHead = 3; // Will contain the index of the game at the head.
+  string fifoTail = 4; // Will contain the index of the game at the tail.
 }
