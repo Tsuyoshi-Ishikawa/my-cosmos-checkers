@@ -29,6 +29,8 @@ func (k msgServer) CreateGame(goCtx context.Context, msg *types.MsgCreateGame) (
 		Red:     msg.Red,
 		Black:   msg.Black,
 		MoveCount: 0,
+		BeforeId:  types.NoFifoIdKey,
+    AfterId:   types.NoFifoIdKey,
 	}
 
 	// 新しいゲームデータの検証
@@ -37,6 +39,8 @@ func (k msgServer) CreateGame(goCtx context.Context, msg *types.MsgCreateGame) (
 		return nil, err
 	}
 
+	// storedGameにbeforeGame、afterGameをセット
+	k.Keeper.SendToFifoTail(ctx, &storedGame, &nextGame)
 	// 新しいゲームデータの保存
 	k.Keeper.SetStoredGame(ctx, storedGame)
 	// この次のゲームのidを設定するためにincrementして保存する
