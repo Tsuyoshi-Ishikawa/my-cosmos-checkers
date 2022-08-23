@@ -34,6 +34,12 @@ const (
 )
 
 const (
+	RejectGameEventKey     = "GameRejected"
+	RejectGameEventCreator = "Creator"
+	RejectGameEventIdValue = "IdValue"
+)
+
+const (
 	PlayMoveEventKey       = "MovePlayed"
 	PlayMoveEventCreator   = "Creator"
 	PlayMoveEventIdValue   = "IdValue"
