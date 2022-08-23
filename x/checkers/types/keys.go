@@ -26,6 +26,10 @@ const (
 )
 
 const (
+	NoFifoIdKey = "-1"
+)
+
+const (
 	StoredGameEventKey     = "NewGameCreated" // Indicates what key to listen to
 	StoredGameEventCreator = "Creator"
 	StoredGameEventIndex   = "Index" // What game is relevant
