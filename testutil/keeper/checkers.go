@@ -15,6 +15,7 @@ import (
 	"github.com/tendermint/tendermint/libs/log"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	tmdb "github.com/tendermint/tm-db"
+	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 )
 
 func CheckersKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
@@ -37,6 +38,7 @@ func CheckersKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
 		"CheckersParams",
 	)
 	k := keeper.NewKeeper(
+		*new(bankkeeper.Keeper),
 		cdc,
 		storeKey,
 		memStoreKey,
