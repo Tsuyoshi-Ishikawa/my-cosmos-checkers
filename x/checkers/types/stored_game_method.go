@@ -94,6 +94,7 @@ func (storedGame *StoredGame) GetWinnerAddress() (address sdk.AccAddress, found 
 	return address, found, err
 }
 
+// かき金分のコインの量を確認する
 func (storedGame *StoredGame) GetWagerCoin() (wager sdk.Coin) {
 	return sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(int64(storedGame.Wager)))
 }
