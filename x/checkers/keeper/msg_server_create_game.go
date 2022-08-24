@@ -33,6 +33,7 @@ func (k msgServer) CreateGame(goCtx context.Context, msg *types.MsgCreateGame) (
     AfterId:   types.NoFifoIdKey,
 		Deadline: types.FormatDeadline(types.GetNextDeadline(ctx)),
 		Winner:    rules.PieceStrings[rules.NO_PLAYER],
+		Wager: msg.Wager,
 	}
 
 	// 新しいゲームデータの検証
@@ -58,6 +59,7 @@ func (k msgServer) CreateGame(goCtx context.Context, msg *types.MsgCreateGame) (
 			sdk.NewAttribute(types.StoredGameEventIndex, newIndex),
 			sdk.NewAttribute(types.StoredGameEventRed, msg.Red),
 			sdk.NewAttribute(types.StoredGameEventBlack, msg.Black),
+			sdk.NewAttribute(types.StoredGameEventWager, strconv.FormatUint(msg.Wager, 10)),
 		),
 	)
 
