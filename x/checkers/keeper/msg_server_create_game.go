@@ -32,6 +32,7 @@ func (k msgServer) CreateGame(goCtx context.Context, msg *types.MsgCreateGame) (
 		BeforeId:  types.NoFifoIdKey,
     AfterId:   types.NoFifoIdKey,
 		Deadline: types.FormatDeadline(types.GetNextDeadline(ctx)),
+		Winner:    rules.PieceStrings[rules.NO_PLAYER],
 	}
 
 	// 新しいゲームデータの検証
