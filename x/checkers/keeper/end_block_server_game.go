@@ -44,13 +44,19 @@ func (k Keeper) ForfeitExpiredGames(goCtx context.Context) {
 			if storedGame.MoveCount <= 1 {
 				// ゲームが作られただけでプレイされていなければ終了させる
 				k.RemoveStoredGame(ctx, storedGameId)
+
+				// すでに初手の人だけがplayしている場合は払い戻してあげる。
+				if storedGame.MoveCount == 1 {
+					k.MustRefundWager(ctx, &storedGame)
+				}
 			} else {
 				// ゲームが途中ならば、勝者を決めてゲームを保存
 				storedGame.Winner, found = opponents[storedGame.Turn]
 				if !found {
 					panic(fmt.Sprintf(types.ErrCannotFindWinnerByColor.Error(), storedGame.Turn))
 				}
-				k.SetStoredGame(ctx, storedGame) //SetStoredGameによってwinnerが決まったゲームはfifoから削除される
+				k.MustPayWinnings(ctx, &storedGame) // 勝者に支払いをする
+				k.SetStoredGame(ctx, storedGame) // SetStoredGameによってwinnerが決まったゲームはfifoから削除される
 			}
 
 			// イベント発火
