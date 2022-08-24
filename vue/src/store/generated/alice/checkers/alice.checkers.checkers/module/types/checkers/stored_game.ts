@@ -16,6 +16,7 @@ export interface StoredGame {
   beforeId: string;
   /** Pertains to the FIFO. Toward tail. */
   afterId: string;
+  deadline: string;
 }
 
 const baseStoredGame: object = {
@@ -28,6 +29,7 @@ const baseStoredGame: object = {
   moveCount: 0,
   beforeId: "",
   afterId: "",
+  deadline: "",
 };
 
 export const StoredGame = {
@@ -58,6 +60,9 @@ export const StoredGame = {
     }
     if (message.afterId !== "") {
       writer.uint32(74).string(message.afterId);
+    }
+    if (message.deadline !== "") {
+      writer.uint32(82).string(message.deadline);
     }
     return writer;
   },
@@ -95,6 +100,9 @@ export const StoredGame = {
           break;
         case 9:
           message.afterId = reader.string();
+          break;
+        case 10:
+          message.deadline = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -151,6 +159,11 @@ export const StoredGame = {
     } else {
       message.afterId = "";
     }
+    if (object.deadline !== undefined && object.deadline !== null) {
+      message.deadline = String(object.deadline);
+    } else {
+      message.deadline = "";
+    }
     return message;
   },
 
@@ -165,6 +178,7 @@ export const StoredGame = {
     message.moveCount !== undefined && (obj.moveCount = message.moveCount);
     message.beforeId !== undefined && (obj.beforeId = message.beforeId);
     message.afterId !== undefined && (obj.afterId = message.afterId);
+    message.deadline !== undefined && (obj.deadline = message.deadline);
     return obj;
   },
 
@@ -214,6 +228,11 @@ export const StoredGame = {
       message.afterId = object.afterId;
     } else {
       message.afterId = "";
+    }
+    if (object.deadline !== undefined && object.deadline !== null) {
+      message.deadline = object.deadline;
+    } else {
+      message.deadline = "";
     }
     return message;
   },

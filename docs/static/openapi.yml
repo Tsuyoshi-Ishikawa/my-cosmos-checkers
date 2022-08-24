@@ -116,6 +116,8 @@ paths:
                       type: string
                     afterId:
                       type: string
+                    deadline:
+                      type: string
               pagination:
                 type: object
                 properties:
@@ -208,6 +210,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/alice/checkers/checkers/stored_game/{index}':
@@ -241,6 +253,8 @@ paths:
                   beforeId:
                     type: string
                   afterId:
+                    type: string
+                  deadline:
                     type: string
         default:
           description: An unexpected error response.
@@ -30700,6 +30714,8 @@ definitions:
               type: string
             afterId:
               type: string
+            deadline:
+              type: string
       pagination:
         type: object
         properties:
@@ -30765,6 +30781,8 @@ definitions:
             type: string
           afterId:
             type: string
+          deadline:
+            type: string
   alice.checkers.checkers.QueryParamsResponse:
     type: object
     properties:
@@ -30793,6 +30811,8 @@ definitions:
       beforeId:
         type: string
       afterId:
+        type: string
+      deadline:
         type: string
   cosmos.base.query.v1beta1.PageRequest:
     type: object
