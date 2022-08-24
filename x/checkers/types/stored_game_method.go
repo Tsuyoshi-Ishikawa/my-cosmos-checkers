@@ -3,6 +3,7 @@ package types
 import (
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/alice/checkers/x/checkers/rules"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -14,6 +15,7 @@ import (
 // errorハンドリングはsdkerrorsで行い、エラーメッセージ(ErrInvalidCreatorなど)はx/checkers/types/errors.goに格納する
 // 参考：https://github.com/cosmos/b9-checkers-academy-draft/blob/main/x/checkers/types/full_game.go
 
+// byte化されて保存されたデータをdecodeして取得している
 func (storedGame *StoredGame) GetCreatorAddress() (creator sdk.AccAddress, err error) {
 	creator, errCreator := sdk.AccAddressFromBech32(storedGame.Creator)
 	return creator, sdkerrors.Wrapf(errCreator, ErrInvalidCreator.Error(), storedGame.Creator)
@@ -56,4 +58,17 @@ func (storedGame StoredGame) Validate() (err error) {
 	}
 	_, err = storedGame.GetBlackAddress()
 	return err
+}
+
+func (storedGame *StoredGame) GetDeadlineAsTime() (deadline time.Time, err error) {
+	deadline, errDeadline := time.Parse(DeadlineLayout, storedGame.Deadline)
+	return deadline, sdkerrors.Wrapf(errDeadline, ErrInvalidDeadline.Error(), storedGame.Deadline)
+}
+
+func GetNextDeadline(ctx sdk.Context) time.Time {
+	return ctx.BlockTime().Add(MaxTurnDuration)
+}
+
+func FormatDeadline(deadline time.Time) string {
+	return deadline.UTC().Format(DeadlineLayout)
 }
