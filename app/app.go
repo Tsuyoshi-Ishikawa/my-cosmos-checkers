@@ -162,6 +162,10 @@ var (
 	)
 
 	// module account permissions
+	// escrowを使ってtokenのやりたい場合はこちらに登録する必要がある。
+	// 預金はmodule accountに保存されるのでmodule accountを設定できるで設定する必要がある
+	// https://tutorials.cosmos.network/academy/3-my-own-chain/game-wager.html#obtaining-the-capability
+	// https://docs.cosmos.network/master/modules/gov/01_concepts.html#deposit
 	maccPerms = map[string][]string{
 		authtypes.FeeCollectorName:     nil,
 		distrtypes.ModuleName:          nil,
@@ -170,6 +174,7 @@ var (
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
+		checkersmoduletypes.ModuleName: nil,
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -390,6 +395,7 @@ func New(
 	monitoringModule := monitoringp.NewAppModule(appCodec, app.MonitoringKeeper)
 
 	app.CheckersKeeper = *checkersmodulekeeper.NewKeeper(
+		app.BankKeeper,
 		appCodec,
 		keys[checkersmoduletypes.StoreKey],
 		keys[checkersmoduletypes.MemStoreKey],
