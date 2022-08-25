@@ -22,18 +22,18 @@ func (k msgServer) CreateGame(goCtx context.Context, msg *types.MsgCreateGame) (
 	// 新しいゲームデータを作成する
 	newGame := rules.New()
 	storedGame := types.StoredGame{
-		Creator: msg.Creator,
-		Index:   newIndex,
-		Game:    newGame.String(),
-		Turn:    rules.PieceStrings[newGame.Turn],
-		Red:     msg.Red,
-		Black:   msg.Black,
+		Creator:   msg.Creator,
+		Index:     newIndex,
+		Game:      newGame.String(),
+		Turn:      rules.PieceStrings[newGame.Turn],
+		Red:       msg.Red,
+		Black:     msg.Black,
 		MoveCount: 0,
 		BeforeId:  types.NoFifoIdKey,
-    AfterId:   types.NoFifoIdKey,
-		Deadline: types.FormatDeadline(types.GetNextDeadline(ctx)),
+		AfterId:   types.NoFifoIdKey,
+		Deadline:  types.FormatDeadline(types.GetNextDeadline(ctx)),
 		Winner:    rules.PieceStrings[rules.NO_PLAYER],
-		Wager: msg.Wager,
+		Wager:     msg.Wager,
 	}
 
 	// 新しいゲームデータの検証

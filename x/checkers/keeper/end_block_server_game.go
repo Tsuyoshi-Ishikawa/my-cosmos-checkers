@@ -56,7 +56,7 @@ func (k Keeper) ForfeitExpiredGames(goCtx context.Context) {
 					panic(fmt.Sprintf(types.ErrCannotFindWinnerByColor.Error(), storedGame.Turn))
 				}
 				k.MustPayWinnings(ctx, &storedGame) // 勝者に支払いをする
-				k.SetStoredGame(ctx, storedGame) // SetStoredGameによってwinnerが決まったゲームはfifoから削除される
+				k.SetStoredGame(ctx, storedGame)    // SetStoredGameによってwinnerが決まったゲームはfifoから削除される
 			}
 
 			// イベント発火

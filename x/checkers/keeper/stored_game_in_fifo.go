@@ -1,8 +1,8 @@
 package keeper
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/alice/checkers/x/checkers/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 // WARN It does not save game or info.
@@ -57,7 +57,7 @@ func (k Keeper) SendToFifoTail(ctx sdk.Context, game *types.StoredGame, info *ty
 	} else {
 		// もしこのゲームがFIFOの一番最後より前にあるならば
 		// FIFOにあるこのゲームを一旦削除して、FIFOの一番最後に追加する
-		
+
 		// Snip game out
 		k.RemoveFromFifo(ctx, game, info)
 

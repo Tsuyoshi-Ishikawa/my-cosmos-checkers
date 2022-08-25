@@ -4,9 +4,9 @@ import (
 	"context"
 	"strings"
 
+	rules "github.com/alice/checkers/x/checkers/rules"
 	"github.com/alice/checkers/x/checkers/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	rules "github.com/alice/checkers/x/checkers/rules"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
@@ -15,7 +15,7 @@ func (k msgServer) RejectGame(goCtx context.Context, msg *types.MsgRejectGame) (
 
 	storedGame, found := k.Keeper.GetStoredGame(ctx, msg.IdValue)
 	if !found {
-			return nil, sdkerrors.Wrapf(types.ErrGameNotFound, "game not found %s", msg.IdValue)
+		return nil, sdkerrors.Wrapf(types.ErrGameNotFound, "game not found %s", msg.IdValue)
 	}
 
 	// すでに勝敗がきまっていれば
@@ -26,15 +26,15 @@ func (k msgServer) RejectGame(goCtx context.Context, msg *types.MsgRejectGame) (
 	// 拒否しようとしているゲームが既に始まっているか or 関係ないプレーヤーによるゲーム拒否
 	// の場合はエラーになる
 	if strings.Compare(storedGame.Red, msg.Creator) == 0 {
-    if 1 < storedGame.MoveCount { // Notice the use of the new field
-        return nil, types.ErrRedAlreadyPlayed
-    }
+		if 1 < storedGame.MoveCount { // Notice the use of the new field
+			return nil, types.ErrRedAlreadyPlayed
+		}
 	} else if strings.Compare(storedGame.Black, msg.Creator) == 0 {
-			if 0 < storedGame.MoveCount { // Notice the use of the new field
-					return nil, types.ErrBlackAlreadyPlayed
-			}
+		if 0 < storedGame.MoveCount { // Notice the use of the new field
+			return nil, types.ErrBlackAlreadyPlayed
+		}
 	} else {
-			return nil, types.ErrCreatorNotPlayer
+		return nil, types.ErrCreatorNotPlayer
 	}
 
 	// Refund wager to black player if red rejects after black played
@@ -53,13 +53,13 @@ func (k msgServer) RejectGame(goCtx context.Context, msg *types.MsgRejectGame) (
 	ctx.GasMeter().ConsumeGas(types.RejectGameGas, "Reject game")
 
 	ctx.EventManager().EmitEvent(
-    sdk.NewEvent(sdk.EventTypeMessage,
-        sdk.NewAttribute(sdk.AttributeKeyModule, "checkers"),
-        sdk.NewAttribute(sdk.AttributeKeyAction, types.RejectGameEventKey),
-        sdk.NewAttribute(types.RejectGameEventCreator, msg.Creator),
-        sdk.NewAttribute(types.RejectGameEventIdValue, msg.IdValue),
-    ),
-)
+		sdk.NewEvent(sdk.EventTypeMessage,
+			sdk.NewAttribute(sdk.AttributeKeyModule, "checkers"),
+			sdk.NewAttribute(sdk.AttributeKeyAction, types.RejectGameEventKey),
+			sdk.NewAttribute(types.RejectGameEventCreator, msg.Creator),
+			sdk.NewAttribute(types.RejectGameEventIdValue, msg.IdValue),
+		),
+	)
 
 	return &types.MsgRejectGameResponse{}, nil
 }
