@@ -9,12 +9,13 @@ const TypeMsgCreateGame = "create_game"
 
 var _ sdk.Msg = &MsgCreateGame{}
 
-func NewMsgCreateGame(creator string, red string, black string, wager uint64) *MsgCreateGame {
+func NewMsgCreateGame(creator string, red string, black string, wager uint64, token string) *MsgCreateGame {
 	return &MsgCreateGame{
 		Creator: creator,
 		Red:     red,
 		Black:   black,
 		Wager:   wager,
+		Token: token,
 	}
 }
 

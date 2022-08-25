@@ -73,3 +73,7 @@ const (
 const (
 	StoredGameEventWager = "Wager"
 )
+
+const (
+	StoredGameEventToken = "Token"
+)
