@@ -1,6 +1,12 @@
 # checkers
 **checkers** is a blockchain built using Cosmos SDK and Tendermint and created with [Ignite CLI](https://ignite.com/cli).
 
+Following [cosmos sdk tutorial](https://tutorials.cosmos.network/academy/3-my-own-chain/), this app is made.
+
+This blockchain feature
+- We can play [checkers](https://www.ducksters.com/games/checkers_rules.php).
+- Players can stake money.
+
 ## Get started
 
 ```
