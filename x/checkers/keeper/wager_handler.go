@@ -28,6 +28,11 @@ func (k *Keeper) CollectWager(ctx sdk.Context, storedGame *types.StoredGame) err
 		if err != nil {
 			panic(err.Error())
 		}
+
+		// storedGame.GetWagerCoin()で新しくcoinをmintする
+		// sdk.NewCoins(coins ...Coin)によって、そのcoinが取引できるcoinとして登録される
+		// SendCoinsFromAccountToModule、登録したcoinの送金が行われる
+
 		err = k.bank.SendCoinsFromAccountToModule(ctx, red, types.ModuleName, sdk.NewCoins(storedGame.GetWagerCoin()))
 		if err != nil {
 			return sdkerrors.Wrapf(err, types.ErrRedCannotPay.Error())
