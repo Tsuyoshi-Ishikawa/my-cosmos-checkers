@@ -7,32 +7,106 @@ This blockchain feature
 - We can play [checkers](https://www.ducksters.com/games/checkers_rules.php).
 - Players can stake money.
 
-## Get started
+Tutorial official code is 
+[b9-checkers-academy-draft](https://github.com/cosmos/b9-checkers-academy-draft/tree/main).
 
+## Set up
+
+```bash
+ignite chain init
 ```
+
+`init` command initialize your chain.
+
+You have to memo account_info.
+```bash
+🛠️  Building proto...
+📦 Installing dependencies...
+🛠️  Building the blockchain...
+🙂 Created account "alice" with address "cosmos16dzyygs6x02t5ed6p9a9n0p0nds79ndmxz85cw" with mnemonic: "win distance sign gentle census cash animal tip actress polar amount weasel unknown twelve pudding broccoli broccoli island north weapon ball enough inhale summer"
+🙂 Created account "bob" with address "cosmos1l8sxl80w3wk8nwje202ljqqtqhhawlz22pye85" with mnemonic: "whip leader habit rice gather copy point choice toward science retreat achieve pride banana exhaust wage drip thumb ghost nice length mosquito knee bottom"
+```
+
+Set environment_variable to bash
+```bash
+# set account_info
+export alice=cosmos16dzyygs6x02t5ed6p9a9n0p0nds79ndmxz85cw
+export bob=cosmos1l8sxl80w3wk8nwje202ljqqtqhhawlz22pye85
+```
+
+```bash
 ignite chain serve
 ```
 
 `serve` command installs dependencies, builds, initializes, and starts your blockchain in development.
 
+## Get started
+
+Check bob balance.
+```bash
+checkersd query bank balances $bob
+```
+
+This returns:
+```bash
+balances:
+- amount: "100000000"
+  denom: stake
+- amount: "10000"
+  denom: token
+pagination:
+  next_key: null
+  total: "0"
+```
+
+You can make use of this other token to create a new game that costs 1 token:
+```bash
+checkersd tx checkers create-game $alice $bob 1 token --from $alice
+```
+
+Which mentions:
+```bash
+...
+- key: Wager
+  value: "1"
+- key: Token
+  value: token
+...
+```
+
+Have Bob play once:
+```bash
+checkersd tx checkers play-move 1 1 2 2 3 --from $bob
+```
+
+This returns:
+```
+...
+raw_log: '[{"events":[{"type":"message","attributes":[{"key":"action","value":"PlayMove"}]}]}]'
+```
+Confirm the move went through with your one-line formatter
+
+Has Bob been charged the wager?
+```bash
+checkersd query bank balances $bob
+```
+
+This returns:
+```
+balances:
+- amount: "100000000"
+  denom: stake
+- amount: "9999"
+  denom: token
+pagination:
+  next_key: null
+  total: "0"
+```
+Correct. You made it possible to wager any token. That includes IBC tokens.
+
 ### Configure
 
 Your blockchain in development can be configured with `config.yml`. To learn more, see the [Ignite CLI docs](https://docs.ignite.com).
-
-### Web Frontend
-
-Ignite CLI has scaffolded a Vue.js-based web app in the `vue` directory. Run the following commands to install dependencies and start the app:
-
-```bash
-cd vue
-npm install
-npm run serve
-# npm run serve is not working at local.
-# we have to npm run dev at local.
-# https://github.com/ignite/cli/issues/2503#issuecomment-1132376680
-```
-
-The frontend app is built using the `@starport/vue` and `@starport/vuex` packages. For details, see the [monorepo for Ignite front-end development](https://github.com/ignite/web).
 
 ## Release
 To release a new version of your blockchain, create and push a new tag with `v` prefix. A new draft release with the configured targets will be created.
