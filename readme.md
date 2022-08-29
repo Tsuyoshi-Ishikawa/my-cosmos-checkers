@@ -72,6 +72,10 @@ Which mentions:
 - key: Token
   value: token
 ...
+# total gas fee including 10 gas fee which set at msg_server_create_game.go
+# https://tutorials.cosmos.network/academy/3-my-own-chain/gas-meter.html#interact-via-the-cli
+gas_used: "55886" 
+...
 ```
 
 Have Bob play once:
