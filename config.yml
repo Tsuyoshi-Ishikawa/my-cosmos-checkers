@@ -1,3 +1,5 @@
+# local networkでの設定(他のnetworkとは関係ない模様)
+# https://tutorials.cosmos.network/academy/3-my-own-chain/ignitecli.html#your-chain
 accounts:
   - name: alice
     coins: ["20000token", "200000000stake"]
